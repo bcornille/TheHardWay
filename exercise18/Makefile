@@ -6,4 +6,4 @@ all:
 	cd ../; make
 
 clean:
-	rm -f db.dat ex18
+	rm -f ex18
