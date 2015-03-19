@@ -9,7 +9,7 @@ int Monster_attack(void *self, int damage)
 {
 	Monster *monster = self;
 
-	printf("You attac %s!\n", monster->_(description));
+	printf("You attack %s!\n", monster->_(description));
 
 	monster->hit_points -= damage;
 
@@ -47,7 +47,7 @@ void *Room_move(void *self, Direction direction)
 		next = room->south;
 	} else if(direction == EAST && room->east) {
 		printf("You go east, into:\n");
-		next = room->south;
+		next = room->east;
 	} else if(direction == WEST && room->west) {
 		printf("You go west, into:\n");
 		next = room->west;
