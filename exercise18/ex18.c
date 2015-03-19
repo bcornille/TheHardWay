@@ -18,6 +18,7 @@ void die(const char *message)
 // A typedef creates a fake type,
 // in this case for a function pointer.
 typedef int (*compare_cb)(int a, int b);
+typedef int *(*sort_cb)(int *numbers, int count, compare_cb cmp);
 
 /**
  * A classic buble sort function that uses
@@ -40,6 +41,41 @@ int *bubble_sort(int *numbers, int count, compare_cb cmp)
 				temp = target[j+1];
 				target[j+1] = target[j];
 				target[j] = temp;
+			}
+		}
+	}
+
+	return target;
+}
+
+/**
+ * The comb sort.
+ * It is a slight improvment over the bubble sort.
+ */
+int *comb_sort(int *numbers, int count, compare_cb cmp)
+{
+	int temp = 0;
+	int gap = count;
+	int i = 0;
+	float shrink = 1.3;
+	int swapped = 0;
+	int *target = malloc(count*sizeof(int));
+
+	if(!target) die("Memory allocation error.");
+
+	memcpy(target, numbers, count*sizeof(int));
+
+	for(gap = count-1; ((gap > 1) || swapped); gap = (int)(gap/shrink)) {
+		if(gap < 1) {
+			gap = 1;
+		}
+
+		for(i = 0, swapped = 0; i + gap < count; i++) {
+			if(cmp(target[i], target[i+gap]) > 0) {
+				temp = target[i+gap];
+				target[i+gap] = target[i];
+				target[i] = temp;
+				swapped = 1;
 			}
 		}
 	}
@@ -70,10 +106,10 @@ int strange_order(int a, int b)
  * Used to test that we are sorting things correctly
  * by doing the sort and printing it out.
  */
-void test_sorting(int *numbers, int count, compare_cb cmp)
+void test_sorting(int *numbers, int count, sort_cb sort, compare_cb cmp)
 {
 	int i = 0;
-	int *sorted = bubble_sort(numbers, count, cmp);
+	int *sorted = sort(numbers, count, cmp);
 
 	if(!sorted) die("Failed to sort as requested.");
 
@@ -84,12 +120,15 @@ void test_sorting(int *numbers, int count, compare_cb cmp)
 
 	free(sorted);
 
+	/*
+	 * This code prints the hex code of the sort function.
 	unsigned char *data = (unsigned char *)cmp;
 
 	for(i = 0; i < 25; i++) {
 		printf("%02x:", data[i]);
 	}
 	printf("\n");
+	*/
 }
 
 int main(int argc, char *argv[])
@@ -107,9 +146,11 @@ int main(int argc, char *argv[])
 		numbers[i] = atoi(inputs[i]);
 	}
 
-	test_sorting(numbers, count, sorted_order);
-	test_sorting(numbers, count, reverse_order);
-	test_sorting(numbers, count, strange_order);
+	test_sorting(numbers, count, bubble_sort, sorted_order);
+	test_sorting(numbers, count, bubble_sort, reverse_order);
+	test_sorting(numbers, count, bubble_sort, strange_order);
+	test_sorting(numbers, count, comb_sort, sorted_order);
+	test_sorting(numbers, count, comb_sort, reverse_order);
 	// test_sorting(numbers, count, die); // The compiler complains if wrong function provided.
 	// test_sorting(numbers, count, NULL); // This line compiles, but leads to segmentation fault. :(
 
