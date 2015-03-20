@@ -4,6 +4,7 @@
 #include <string.h>
 #include <time.h>
 #include "ex19.h"
+#include <assert.h>
 
 int Monster_attack(void *self, int damage)
 {
@@ -144,6 +145,8 @@ Object MapProto = {
 
 int process_input(Map *game)
 {
+	assert(game != NULL);
+
 	printf("\n> ");
 
 	char ch = getchar();
@@ -207,4 +210,4 @@ int main(int argc, char *argv[])
 	}
 
 	return 0;
-}
+ }
