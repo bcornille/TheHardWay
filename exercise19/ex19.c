@@ -8,6 +8,8 @@
 
 int Monster_attack(void *self, int damage)
 {
+	assert(damage >= 0);
+
 	Monster *monster = self;
 
 	printf("You attack %s!\n", monster->_(description));
@@ -66,6 +68,8 @@ void *Room_move(void *self, Direction direction)
 
 int Room_attack(void *self, int damage)
 {
+	assert(damage >= 0);
+
 	Room *room = self;
 	Monster *monster = room->bad_guy;
 
@@ -100,6 +104,8 @@ void *Map_move(void *self, Direction direction)
 
 int Map_attack(void *self, int damage)
 {
+	assert(damage >= 0);
+
 	Map* map = self;
 	Room *location = map->location;
 
@@ -155,7 +161,7 @@ int process_input(Map *game)
 	int damage = rand() % 4;
 
 	switch(ch) {
-		case -1:
+		case 'q':
 			printf("Giving up? You suck.\n");
 			return 0;
 			break;
@@ -189,7 +195,15 @@ int process_input(Map *game)
 			break;
 
 		default:
-			printf("What?: %d\n", ch);
+			printf("What?: %c\n", ch);
+			printf("Game commands are:\n"
+					"	q - quit\n"
+					"	n - move NORTH\n"
+					"	s - move SOUTH\n"
+					"	e - move EAST\n"
+					"	w - move WEST\n"
+					"	a - attack\n"
+					"	l - list available directions\n");
 	}
 
 	return 1;

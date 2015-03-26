@@ -34,12 +34,15 @@ void *Object_move(void *self, Direction direction)
 
 int Object_attack(void *self, int damage)
 {
+	assert(damage >= 0);
+
 	printf("You can't attack that.\n");
 	return 0;
 }
 
 void *Object_new(size_t size, Object proto, char *description)
 {
+	assert(size > 0);
 	assert(description != NULL);
 
 	// Setup the default function in case they aren't set.
@@ -50,11 +53,10 @@ void *Object_new(size_t size, Object proto, char *description)
 	if(!proto.move) proto.move = Object_move;
 
 	/**
-	 * This seems weirc, but we can make a struc of one size,
+	 * This seems weird, but we can make a struct of one size,
 	 * then point a different pointer at it to "cast" it.
 	 */
 	Object *el = calloc(1, size);
-	assert(el != NULL);
 	*el = proto;
 
 	// Copy the description over.
