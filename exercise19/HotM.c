@@ -49,8 +49,9 @@ int main(int argc, char *argv[])
 	srand(time(NULL));
 
 	// Make our map to work with.
-	Map *game = NEW(Map, "The Hall of the Minotaur.");
+	Map *game = NEW(Map, "The Hall of the Minotaur");
 
+	game->_(describe)(game);
 	printf("You enter the ");
 	game->location->_(describe)(game->location);
 
