@@ -2,7 +2,9 @@ CFLAGS= -Wall -g
 
 default: ex19
 
-HotMK: core.o object.o
+HotM: core.o object.o
+
+AHBaCH: core.o object.o
 
 core.o: object.o
 
@@ -12,4 +14,4 @@ all:
 	cd ../; make
 
 clean:
-	rm -f ex19 object.o core.o HotMK
+	rm -f ex19 object.o core.o HotM AHBaCH
