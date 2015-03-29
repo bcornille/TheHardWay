@@ -23,7 +23,7 @@ void test_log_warn()
 	log_warn("Maybe consider looking at: %s.", "$HOME/usr/");
 }
 
-void test_lot_info()
+void test_log_info()
 {
 	log_info("Well I did something mundane.");
 	log_info("It happened %f times today.", 1.3f);
@@ -59,7 +59,7 @@ int test_sentinel(int code)
 		case 1:
 			log_info("It worked.");
 			break;
-		defualt:
+		default:
 			sentinel("I shouldn't run.");
 	}
 
