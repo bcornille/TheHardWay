@@ -1,6 +1,6 @@
 CFLAGS= -Wall -g
 
-default: ex19
+default: HotM AHBaCH
 
 HotM: core.o object.o
 
