@@ -11,6 +11,11 @@ int get_age()
 	return THE_AGE;
 }
 
+int *get_age_ptr()
+{
+	return &THE_AGE;
+}
+
 void set_age(int age)
 {
 	THE_AGE = age;

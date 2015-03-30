@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "ex22.h"
 #include "dbg.h"
 
@@ -18,6 +19,11 @@ void scope_demo(int count)
 	count = 3000;
 
 	log_info("count after assign: %d", count);
+
+	/*
+	 * This line would cause a stack overflow due to recursive call of scope_demo.
+	scope_demo(count);
+	*/
 }
 
 int main(int argc, char *argv[])
@@ -27,6 +33,18 @@ int main(int argc, char *argv[])
 
 	set_age(100);
 
+	log_info("My age is now: %d", get_age());
+
+	/*
+	 * This file does not have access to THE_AGE so these lines will not compile.
+	THE_AGE = 1;
+
+	log_info("My age is now: %d", get_age());
+	*/
+
+	// This uses a pointer to get at THE_AGE. This is not a good idea...
+	int *age_ptr = get_age_ptr();
+	*age_ptr = 1;
 	log_info("My age is now: %d", get_age());
 
 	// Test out THE_SIZE extern.
